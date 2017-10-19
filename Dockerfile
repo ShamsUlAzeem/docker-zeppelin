@@ -20,7 +20,6 @@ RUN set -ex \
     scipy \
  ' \
  && pip3 install $packages \
- && rm -rf /root/.cache/pip \
  && apt-get purge -y --auto-remove $buildDeps \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
@@ -30,7 +29,6 @@ ENV ZEPPELIN_PORT 8080
 ENV ZEPPELIN_HOME /usr/zeppelin
 ENV ZEPPELIN_CONF_DIR $ZEPPELIN_HOME/conf
 ENV ZEPPELIN_NOTEBOOK_DIR $ZEPPELIN_HOME/notebook
-ENV ZEPPELIN_COMMIT v0.7.2
 RUN echo '{ "allow_root": true }' > /root/.bowerrc
 RUN set -ex \
  && buildDeps=' \
@@ -42,12 +40,10 @@ RUN set -ex \
  && curl -sL http://archive.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz \
    | gunzip \
    | tar x -C /tmp/ \
- && git clone https://github.com/apache/zeppelin.git /usr/src/zeppelin \
- && cd /usr/src/zeppelin \
- && git checkout -q $ZEPPELIN_COMMIT \
- && dev/change_scala_version.sh "2.11" \
- && MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=1024m" /tmp/apache-maven-3.5.0/bin/mvn --batch-mode package -DskipTests -Pscala-2.11 -Pbuild-distr \
-  -pl 'zeppelin-interpreter,zeppelin-zengine,zeppelin-display,spark-dependencies,spark,markdown,angular,shell,hbase,postgresql,jdbc,python,elasticsearch,zeppelin-web,zeppelin-server,zeppelin-distribution' \
+ && git clone https://github.com/apache/zeppelin.git /usr/src/zeppelin
+ 
+RUN cd /usr/src/zeppelin \
+ && MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=1024m" /tmp/apache-maven-3.5.0/bin/mvn package -Pbuild-distr -DskipTests \
  && tar xvf /usr/src/zeppelin/zeppelin-distribution/target/zeppelin*.tar.gz -C /usr/ \
  && mv /usr/zeppelin* $ZEPPELIN_HOME \
  && mkdir -p $ZEPPELIN_HOME/logs \
@@ -57,11 +53,10 @@ RUN set -ex \
  && rm -rf /usr/src/zeppelin \
  && rm -rf /root/.m2 \
  && rm -rf /root/.npm \
- && rm -rf /root/.cache/bower \
  && rm -rf /tmp/*
 
-RUN ln -s /usr/bin/pip3 /usr/bin/pip \
- && ln -s /usr/bin/python3 /usr/bin/python
+RUN ln -s -f /usr/bin/pip3 /usr/bin/pip \
+ && ln -s -f /usr/bin/python3 /usr/bin/python
 
 ADD about.json $ZEPPELIN_NOTEBOOK_DIR/2BTRWA9EV/note.json
 WORKDIR $ZEPPELIN_HOME
