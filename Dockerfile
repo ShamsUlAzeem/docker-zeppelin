@@ -1,4 +1,4 @@
-FROM gettyimages/spark:2.1.1-hadoop-2.7
+FROM gettyimages/spark:2.2.0-hadoop-2.7
 
 # SciPy
 RUN set -ex \
@@ -58,6 +58,5 @@ RUN cd /usr/src/zeppelin \
 RUN ln -s -f /usr/bin/pip3 /usr/bin/pip \
  && ln -s -f /usr/bin/python3 /usr/bin/python
 
-ADD about.json $ZEPPELIN_NOTEBOOK_DIR/2BTRWA9EV/note.json
 WORKDIR $ZEPPELIN_HOME
 CMD ["bin/zeppelin.sh"]
