@@ -15,6 +15,7 @@ for file in files:
 
         folder_name = data['id']
         notebook_name = data['name']
+        print(folder_name, notebook_name)
 
         os.mkdir(output_path_prefix + folder_name)
         output_path = output_path_prefix + folder_name + '/note.json'
