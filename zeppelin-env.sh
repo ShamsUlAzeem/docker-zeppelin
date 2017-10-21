@@ -62,7 +62,7 @@
 ## defining SPARK_HOME makes Zeppelin run spark interpreter process using spark-submit
 ##
 # export SPARK_HOME                             # (required) When it is defined, load it instead of Zeppelin embedded Spark libraries
-export SPARK_SUBMIT_OPTIONS="--packages org.nd4j:nd4j-native-platform:0.9.1,org.deeplearning4j:deeplearning4j-core:0.9.1,org.deeplearning4j:deeplearning4j-zoo:0.9.1"
+export SPARK_SUBMIT_OPTIONS="--jars $ZEPPELIN_HOME/zeppelin-deps-jar-with-dependencies.jar"
 # export SPARK_APP_NAME                         # (optional) The name of spark application.
 
 ## Use embedded spark binaries ##
