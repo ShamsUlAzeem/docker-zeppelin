@@ -17,7 +17,7 @@ To build a local docker image:
 1. You have to put all the json notebook files in the notebook_json folder
 2. Configure all the dependencies in the pom.xml
 
-The run the following commands
+Then run the following commands:
 ```
 ./install.sh #To build the image
 docker run -it --rm -p 8080:8080 zeppelin080 # To run the image
