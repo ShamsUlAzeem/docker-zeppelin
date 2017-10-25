@@ -64,7 +64,7 @@ RUN ln -s -f /usr/bin/pip3 /usr/bin/pip \
 RUN apt-get update && apt-get install dos2unix
 COPY notebook_json $ZEPPELIN_HOME/notebook_json
 ADD json-folder-ids.py $ZEPPELIN_HOME
-RUN python json-folder-ids.py && mkdir $ZEPPELIN_HOME/otherpoms && cd $ZEPPELIN_HOME/otherpoms
+RUN cd $ZEPPELIN_HOME && python json-folder-ids.py && mkdir $ZEPPELIN_HOME/otherpoms && cd $ZEPPELIN_HOME/otherpoms
 ADD pom.xml $ZEPPELIN_HOME/otherpoms
 RUN mvn package
 ADD zeppelin-env.sh $ZEPPELIN_HOME/conf
