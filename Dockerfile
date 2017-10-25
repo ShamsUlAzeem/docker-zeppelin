@@ -39,9 +39,11 @@ RUN set -ex \
  && apt-get update && apt-get install -y --no-install-recommends $buildDeps \
  && curl -sL http://archive.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz \
    | gunzip \
-   | tar x -C /tmp/ \
- && git clone https://github.com/ShamsUlAzeem/zeppelin.git \
- && git fetch && git checkout 'ipynb-export/import'
+   | tar x -C /tmp/
+   
+RUN git clone https://github.com/ShamsUlAzeem/zeppelin.git /usr/src/zeppelin
+
+RUN cd /usr/src/zeppelin && git init && git fetch && git checkout 'ipynb-export/import'
  
 RUN cd /usr/src/zeppelin \
  && MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=1024m" /tmp/apache-maven-3.5.0/bin/mvn package -Pbuild-distr -DskipTests \
