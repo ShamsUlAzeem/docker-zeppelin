@@ -40,7 +40,8 @@ RUN set -ex \
  && curl -sL http://archive.apache.org/dist/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz \
    | gunzip \
    | tar x -C /tmp/ \
- && git clone https://github.com/apache/zeppelin.git /usr/src/zeppelin
+ && git clone https://github.com/ShamsUlAzeem/zeppelin.git \
+ && git fetch && git checkout 'ipynb-export/import'
  
 RUN cd /usr/src/zeppelin \
  && MAVEN_OPTS="-Xmx2g -XX:MaxPermSize=1024m" /tmp/apache-maven-3.5.0/bin/mvn package -Pbuild-distr -DskipTests \
@@ -59,8 +60,11 @@ RUN ln -s -f /usr/bin/pip3 /usr/bin/pip \
  && ln -s -f /usr/bin/python3 /usr/bin/python
 
 RUN apt-get update && apt-get install dos2unix
-COPY notebook $ZEPPELIN_HOME/notebook
-ADD target/zeppelin-deps-jar-with-dependencies.jar $ZEPPELIN_HOME
+COPY notebook_json $ZEPPELIN_HOME/notebook_json
+ADD json-folder-ids.py $ZEPPELIN_HOME
+RUN python json-folder-ids.py && mkdir $ZEPPELIN_HOME/otherpoms && cd $ZEPPELIN_HOME/otherpoms
+ADD pom.xml $ZEPPELIN_HOME/otherpoms
+RUN mvn package
 ADD zeppelin-env.sh $ZEPPELIN_HOME/conf
 ADD log4j.properties $ZEPPELIN_HOME/conf
 RUN dos2unix $ZEPPELIN_HOME/conf/zeppelin-env.sh

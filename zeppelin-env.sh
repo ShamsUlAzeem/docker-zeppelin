@@ -62,7 +62,7 @@
 ## defining SPARK_HOME makes Zeppelin run spark interpreter process using spark-submit
 ##
 # export SPARK_HOME                             # (required) When it is defined, load it instead of Zeppelin embedded Spark libraries
-export SPARK_SUBMIT_OPTIONS="--jars $ZEPPELIN_HOME/zeppelin-deps-jar-with-dependencies.jar"
+export SPARK_SUBMIT_OPTIONS="--jars $ZEPPELIN_HOME/otherpoms/target/zeppelin-deps-jar-with-dependencies.jar"
 # export SPARK_APP_NAME                         # (optional) The name of spark application.
 
 ## Use embedded spark binaries ##
