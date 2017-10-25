@@ -8,7 +8,7 @@ docker pull shamsulazeem/zeppelin-0.8.0-snapshot:latest
 docker run -it --rm -p 8080:8080 shamsulazeem/zeppelin-0.8.0-snapshot:latest
 ```
 
-To launch a docker image with pre-configured notebooks and dl4j dependencies:
+To launch a docker image with ipynb imports/exports, pre-configured notebooks and dl4j dependencies:
 ```
 docker run -it --rm -p 8080:8080 shamsulazeem/zeppelin-0.8.0-snapshot:dl4j-tutorials
 ``` 
@@ -19,7 +19,7 @@ To build a local docker image:
 
 Then run the following commands:
 ```
-./install.sh #To build the image
+docker build -t zeppelin080 .
 docker run -it --rm -p 8080:8080 zeppelin080 # To run the image
 ```
 
