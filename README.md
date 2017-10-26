@@ -5,11 +5,12 @@
 To start Zeppelin pull the `latest` image and run the container:
 ```
 docker pull shamsulazeem/zeppelin-0.8.0-snapshot:latest
-docker run -it --rm -p 8080:8080 shamsulazeem/zeppelin-0.8.0-snapshot:latest
+docker run -it --rm -p 8080:8080 -p 4040:4040 shamsulazeem/zeppelin-0.8.0-snapshot:latest
 ```
 
 To launch a docker image with ipynb imports/exports, pre-configured notebooks and dl4j dependencies:
 ```
+docker pull shamsulazeem/zeppelin-0.8.0-snapshot:dl4j-tutorials
 docker run -it --rm -p 8080:8080 shamsulazeem/zeppelin-0.8.0-snapshot:dl4j-tutorials
 ``` 
 
@@ -20,10 +21,10 @@ To build a local docker image:
 Then run the following commands:
 ```
 docker build -t zeppelin080 .
-docker run -it --rm -p 8080:8080 zeppelin080 # To run the image
+docker run -it --rm -p 8080:8080 -p 4040:4040 zeppelin080 # To run the image
 ```
 
-Zeppelin will be running at `http://${YOUR_DOCKER_HOST}:8080`.
+Zeppelin will be running at `http://${YOUR_DOCKER_HOST}:8080`
 
 ## license
 

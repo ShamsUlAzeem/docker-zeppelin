@@ -75,5 +75,8 @@ ADD zeppelin-env.sh $ZEPPELIN_HOME/conf
 ADD log4j.properties $ZEPPELIN_HOME/conf
 RUN dos2unix $ZEPPELIN_HOME/conf/zeppelin-env.sh
 
+EXPOSE 4040
+EXPOSE 8080
+
 WORKDIR $ZEPPELIN_HOME
 CMD ["bin/zeppelin.sh"]
